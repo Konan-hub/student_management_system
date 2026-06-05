@@ -29,7 +29,6 @@ public class StudentTest {
         });
     }
 
-
 // 2. AGE VALIDATION TESTS
     @Test
     public void shouldThrowExceptionWhenAgeIsExactlyZero() {
