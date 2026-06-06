@@ -88,4 +88,8 @@ public class ConsoleApp {
             }
         }
     }
+    // Getter to allow our test class to verify the database state
+    public Map<String, Student> getStudentDatabase() {
+        return this.studentDatabase;
+    }
 }
