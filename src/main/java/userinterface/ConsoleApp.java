@@ -30,6 +30,7 @@ public class ConsoleApp {
                 System.out.println("1. Create an account (Register)");
                 System.out.println("2. Access your account (Login)");
                 System.out.println("3. Exit");
+                System.out.println("4. Account Management (Update/Delete) ");
                 System.out.print("Select an option: ");
 
                 String choice = scanner.nextLine().trim();
@@ -89,6 +90,72 @@ public class ConsoleApp {
                         System.out.println("Goodbye!");
                         scanner.close();
                         return;
+
+                    case "4":
+                        boolean inManagementMenu = true;
+                        while (inManagementMenu) {
+                            System.out.println("\n--- ACCOUNT MANAGEMENT ---");
+                            System.out.println("1. Update your age");
+                            System.out.println("2. Delete your account");
+                            System.out.println("3. Back to Main Menu");
+                            System.out.print("Select a management option: ");
+
+                            String subChoice = scanner.nextLine().trim();
+
+                            switch (subChoice) {
+                                case "1": //  UPDATE MODE
+                                    System.out.print("\nEnter your username to update your profile: ");
+                                    String userToUpdate = scanner.nextLine().trim();
+
+                                    if (studentDatabase.containsKey(userToUpdate)) {
+                                        Student student = studentDatabase.get(userToUpdate);
+                                        System.out.println("Current Profile -> Name: " + student.getName() + ", Age: " + student.getAge());
+
+                                        System.out.print("Enter your new age: ");
+                                        String newAgeInput = scanner.nextLine().trim();
+                                        int newAge = Integer.parseInt(newAgeInput);
+
+                                        student.setAge(newAge);
+
+                                        saveDatabase();
+                                        System.out.println("[Success] Age updated successfully!");
+                                    } else {
+                                        System.out.println("Error: Username not found.");
+                                    }
+                                    break;
+
+                                case "2": // DELETE MODE
+                                    System.out.print("\nEnter the username of the account to DELETE: ");
+                                    String userToDelete = scanner.nextLine().trim();
+
+                                    if (studentDatabase.containsKey(userToDelete)) {
+                                        System.out.print("Are you sure? This action is irreversible! (yes/no): ");
+                                        String confirmation = scanner.nextLine().trim().toLowerCase();
+
+                                        if (confirmation.equals("yes")) {
+                                            Student deletedStudent = studentDatabase.remove(userToDelete);
+                                            saveDatabase();
+                                            System.out.println("[Success] Account '" + userToDelete + "' (Real Name: " + deletedStudent.getName() + ") has been deleted.");
+                                        } else {
+                                            System.out.println("Deletion canceled.");
+                                        }
+                                    } else {
+                                        System.out.println("Error: Username not found.");
+                                    }
+                                    break;
+
+                                case "3": //  RETURN MODE
+                                    System.out.println("Returning to Main Menu...");
+                                    inManagementMenu = false;
+                                    break;
+
+                                default:
+                                    System.out.println("Invalid option! Please enter 1, 2, 3 or 4.");
+                                    break;
+                            }
+                        }
+                        break;
+
 
                     default:
                         System.out.println("Invalid option! Please enter 1, 2, or 3.");
