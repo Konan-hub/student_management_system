@@ -1,7 +1,11 @@
 package model;
+import java.io.Serializable;
 
-public class Student {
-    private String name ;
+public class Student implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private  String name ;
     private int age ;
 
     public Student(String name, int age) {
